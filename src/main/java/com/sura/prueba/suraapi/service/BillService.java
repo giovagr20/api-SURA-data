@@ -1,17 +1,19 @@
-package com.sura.prueba.suraapi.dto.dao;
+package com.sura.prueba.suraapi.service;
 
 import com.sura.prueba.suraapi.model.BillsModel;
-import com.sura.prueba.suraapi.repository.BillRepository;
+import com.sura.prueba.suraapi.repository.IBillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class BillsDAO implements IBillsDAO {
+@Service
+public class BillService implements IBillService {
 
     @Autowired
-    BillRepository billRepository;
+    IBillRepository billRepository;
 
     @Override
     public List<BillsModel> findAll() {
@@ -26,7 +28,6 @@ public class BillsDAO implements IBillsDAO {
         if(dao.isPresent()) {
             return dao.get();
         }
-
         return null;
     }
 

@@ -4,6 +4,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -12,31 +14,31 @@ public class BillsModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
 
-    @Column(name="bills_date")
+    @Column(name = "bills_date")
     private Date billsDate;
 
-    @Column(name="bills_total")
+    @Column(name = "bills_total")
     private double billsTotal;
 
-    @Column(name="created_at")
-    @CreationTimestamp
-    private Date createdAt;
-
-    @Column(name="updated_at")
-    @UpdateTimestamp
-    private Date updatedAt;
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable = false)
+    private UserModel user;
 
     public BillsModel() {
     }
 
-    public BillsModel(Date billsDate, double billsTotal, Date createdAt, Date updatedAt) {
+    public BillsModel(Date billsDate, double billsTotal) {
         this.billsDate = billsDate;
         this.billsTotal = billsTotal;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    }
+
+    public BillsModel(Date billsDate, double billsTotal, UserModel user) {
+        this.billsDate = billsDate;
+        this.billsTotal = billsTotal;
+        this.user = user;
     }
 
     public int getId() {
@@ -63,20 +65,12 @@ public class BillsModel {
         this.billsTotal = billsTotal;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public UserModel getUser() {
+        return user;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 
     @Override
@@ -85,8 +79,7 @@ public class BillsModel {
                 "id=" + id +
                 ", billsDate=" + billsDate +
                 ", billsTotal=" + billsTotal +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", user=" + user +
                 '}';
     }
 }
