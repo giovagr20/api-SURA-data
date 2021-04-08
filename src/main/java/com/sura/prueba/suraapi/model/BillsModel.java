@@ -1,12 +1,9 @@
 package com.sura.prueba.suraapi.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="bills")
@@ -23,9 +20,14 @@ public class BillsModel {
     @Column(name = "bills_total")
     private double billsTotal;
 
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
-    private UserModel user;
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "bills_users",
+            joinColumns = @JoinColumn(name = "id_bill", nullable = false),
+            inverseJoinColumns = @JoinColumn(name="id_user", nullable = false)
+    )
+    private List<UserModel> users;
 
     public BillsModel() {
     }
@@ -35,10 +37,10 @@ public class BillsModel {
         this.billsTotal = billsTotal;
     }
 
-    public BillsModel(Date billsDate, double billsTotal, UserModel user) {
+    public BillsModel(Date billsDate, double billsTotal, List<UserModel> users) {
         this.billsDate = billsDate;
         this.billsTotal = billsTotal;
-        this.user = user;
+        this.users = users;
     }
 
     public int getId() {
@@ -65,12 +67,12 @@ public class BillsModel {
         this.billsTotal = billsTotal;
     }
 
-    public UserModel getUser() {
-        return user;
+    public List<UserModel> getUser() {
+        return users;
     }
 
-    public void setUser(UserModel user) {
-        this.user = user;
+    public void setUser(List<UserModel> users) {
+        this.users = users;
     }
 
     @Override
@@ -79,7 +81,7 @@ public class BillsModel {
                 "id=" + id +
                 ", billsDate=" + billsDate +
                 ", billsTotal=" + billsTotal +
-                ", user=" + user +
+                ", user=" + users +
                 '}';
     }
 }

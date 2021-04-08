@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,7 +26,7 @@ public class SuraApiApplication {
     }
 
     @Bean
-    public void initDatabaseUser() {
+    public void initDatabaseUserBills() throws ParseException {
         ArrayList<UserModel> users = new ArrayList<>();
         users.add(new UserModel("Adam"));
         users.add(new UserModel("Bolton"));
@@ -34,6 +35,8 @@ public class SuraApiApplication {
         users.add(new UserModel("Vincent"));
         users.add(new UserModel("Warden"));
         users.forEach(user -> userService.save(user));
+
+
     }
 
     @Bean
@@ -41,25 +44,26 @@ public class SuraApiApplication {
 
         ArrayList<BillsModel> bills = new ArrayList<>();
         SimpleDateFormat date = new SimpleDateFormat("dd-mm-yyyy");
-        UserModel user = userService.findById(1);
-        bills.add(new BillsModel(date.parse("01-01-2021"), 2000000, user));
-        bills.add(new BillsModel(date.parse("02-01-2021"), 1000000, user));
-        bills.add(new BillsModel(date.parse("03-01-2021"), 1000000, user));
-        user = userService.findById(2);
-        bills.add(new BillsModel(date.parse("01-01-2021"), 400000, user));
-        bills.add(new BillsModel(date.parse("03-01-2021"), 1100000, user));
-        bills.add(new BillsModel(date.parse("02-01-2021"), 500000, user));
-        user = userService.findById(3);
-		bills.add(new BillsModel(date.parse("02-01-2021"), 900000, user));
-		bills.add(new BillsModel(date.parse("02-01-2021"), 59900, user));
-		bills.add(new BillsModel(date.parse("03-01-2021"), 1100000, user));
-		user = userService.findById(4);
-		bills.add(new BillsModel(date.parse("02-01-2021"), 4000000, user));
-		user = userService.findById(5);
-		bills.add(new BillsModel(date.parse("03-01-2021"), 899999, user));
-		user = userService.findById(6);
-		bills.add(new BillsModel(date.parse("02-01-2021"), 5100000, user));
-		bills.add(new BillsModel(date.parse("03-01-2021"), 1100000, user));
+
+        bills.add(new BillsModel(date.parse("01-01-2021"), 2000000));
+        bills.add(new BillsModel(date.parse("02-01-2021"), 1000000));
+        bills.add(new BillsModel(date.parse("03-01-2021"), 1000000));
+        bills.add(new BillsModel(date.parse("01-01-2021"), 400000));
+        bills.add(new BillsModel(date.parse("03-01-2021"), 1100000));
+        bills.add(new BillsModel(date.parse("02-01-2021"), 500000));
+		bills.add(new BillsModel(date.parse("02-01-2021"), 900000));
+		bills.add(new BillsModel(date.parse("02-01-2021"), 59900));
+		bills.add(new BillsModel(date.parse("03-01-2021"), 1100000));
+		bills.add(new BillsModel(date.parse("02-01-2021"), 4000000));
+		bills.add(new BillsModel(date.parse("03-01-2021"), 899999));
+		bills.add(new BillsModel(date.parse("02-01-2021"), 5100000));
+		bills.add(new BillsModel(date.parse("03-01-2021"), 1100000));
         bills.forEach(bill -> billService.save(bill));
+
+       /* UserModel user = userService.findById(1);
+        BillsModel billsAdam = billService.findById(1);
+        billsAdam.getUser().add(user);
+        billService.save(billsAdam);*/
+
     }
 }

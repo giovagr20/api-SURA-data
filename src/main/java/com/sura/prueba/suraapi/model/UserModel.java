@@ -1,6 +1,8 @@
 package com.sura.prueba.suraapi.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,8 +17,12 @@ public class UserModel {
     @Column(name="name")
     private String name;
 
-    @OneToMany(mappedBy = "user")
-    private Set<BillsModel> bills;
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE},
+            mappedBy = "users")
+    private List<BillsModel> bills;
 
     public UserModel() {
     }
@@ -25,7 +31,7 @@ public class UserModel {
         this.name = name;
     }
 
-    public UserModel(String name, Set<BillsModel> bills) {
+    public UserModel(String name, List<BillsModel> bills) {
         this.name = name;
         this.bills = bills;
     }
@@ -46,11 +52,11 @@ public class UserModel {
         this.name = name;
     }
 
-    public Set<BillsModel> getBills() {
+    public List<BillsModel> getBills() {
         return bills;
     }
 
-    public void setBills(Set<BillsModel> bills) {
+    public void setBills(List<BillsModel> bills) {
         this.bills = bills;
     }
 
@@ -61,5 +67,12 @@ public class UserModel {
                 ", name='" + name + '\'' +
                 ", bills=" + bills +
                 '}';
+    }
+
+    public void addBills(BillsModel bill) {
+        if(this.bills == null) {
+            this.bills = new ArrayList<>();
+        }
+        this.bills.add(bill);
     }
 }
