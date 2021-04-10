@@ -1,5 +1,6 @@
 package com.sura.prueba.suraapi.service;
 
+import com.sura.prueba.suraapi.model.BillsModel;
 import com.sura.prueba.suraapi.model.UserModel;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +16,7 @@ public interface IUserService {
     void save(UserModel user);
 
     void deleteById(int id);
+
+    String addUserBill(UserModel user, BillsModel bill);
+
 }

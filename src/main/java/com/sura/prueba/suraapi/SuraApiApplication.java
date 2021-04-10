@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class SuraApiApplication {
@@ -60,10 +61,6 @@ public class SuraApiApplication {
 		bills.add(new BillsModel(date.parse("03-01-2021"), 1100000));
         bills.forEach(bill -> billService.save(bill));
 
-       /* UserModel user = userService.findById(1);
-        BillsModel billsAdam = billService.findById(1);
-        billsAdam.getUser().add(user);
-        billService.save(billsAdam);*/
 
     }
 }

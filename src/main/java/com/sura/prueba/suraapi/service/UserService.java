@@ -1,5 +1,6 @@
 package com.sura.prueba.suraapi.service;
 
+import com.sura.prueba.suraapi.model.BillsModel;
 import com.sura.prueba.suraapi.model.UserModel;
 import com.sura.prueba.suraapi.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ public class UserService implements IUserService {
 
     @Autowired
     IUserRepository userRepository;
+    @Autowired
+    IBillService billService;
 
     @Override
     public List<UserModel> findAll() {
@@ -41,5 +44,18 @@ public class UserService implements IUserService {
     @Override
     public void deleteById(int id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public String addUserBill(UserModel user, BillsModel bill) {
+        Optional<UserModel> userModel= userRepository.findById(user.getId());
+        if(userModel.isPresent()) {
+            userModel.get().getBills().add(bill);
+            BillsModel billsModel = billService.findById(bill.getId());
+            billsModel.getUser().add(userModel.get());
+            userRepository.save(userModel.get());
+            return "Success association";
+        }
+        return null;
     }
 }
