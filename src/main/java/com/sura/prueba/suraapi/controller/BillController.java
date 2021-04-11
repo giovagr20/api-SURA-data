@@ -23,11 +23,11 @@ public class BillController {
     }
 
     @GetMapping("/bills/{billId}")
-    public BillsModel getBills(@PathVariable int billId){
+    public BillsModel getBills(@PathVariable int billId) {
         BillsModel bill = billService.findById(billId);
 
-        if(bill == null) {
-            throw new RuntimeException("User id not found -"+ bill);
+        if (bill == null) {
+            throw new RuntimeException("User id not found -" + bill);
         }
         //retornará al usuario con id pasado en la url
         return bill;

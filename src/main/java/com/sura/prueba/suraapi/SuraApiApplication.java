@@ -8,12 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class SuraApiApplication {
@@ -52,13 +50,13 @@ public class SuraApiApplication {
         bills.add(new BillsModel(date.parse("01-01-2021"), 400000));
         bills.add(new BillsModel(date.parse("03-01-2021"), 1100000));
         bills.add(new BillsModel(date.parse("02-01-2021"), 500000));
-		bills.add(new BillsModel(date.parse("02-01-2021"), 900000));
-		bills.add(new BillsModel(date.parse("02-01-2021"), 59900));
-		bills.add(new BillsModel(date.parse("03-01-2021"), 1100000));
-		bills.add(new BillsModel(date.parse("02-01-2021"), 4000000));
-		bills.add(new BillsModel(date.parse("03-01-2021"), 899999));
-		bills.add(new BillsModel(date.parse("02-01-2021"), 5100000));
-		bills.add(new BillsModel(date.parse("03-01-2021"), 1100000));
+        bills.add(new BillsModel(date.parse("02-01-2021"), 900000));
+        bills.add(new BillsModel(date.parse("02-01-2021"), 59900));
+        bills.add(new BillsModel(date.parse("03-01-2021"), 1100000));
+        bills.add(new BillsModel(date.parse("02-01-2021"), 4000000));
+        bills.add(new BillsModel(date.parse("03-01-2021"), 899999));
+        bills.add(new BillsModel(date.parse("02-01-2021"), 5100000));
+        bills.add(new BillsModel(date.parse("03-01-2021"), 1100000));
         bills.forEach(bill -> billService.save(bill));
 
 

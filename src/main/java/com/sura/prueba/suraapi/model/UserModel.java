@@ -1,20 +1,24 @@
 package com.sura.prueba.suraapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name="users")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Table(name = "users")
 public class UserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
-    private int id;
+    @Column(name = "id_user")
+    private int idUser;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER,
@@ -22,9 +26,15 @@ public class UserModel {
                     CascadeType.PERSIST,
                     CascadeType.MERGE},
             mappedBy = "users")
+    @JsonManagedReference
     private List<BillsModel> bills;
 
     public UserModel() {
+    }
+
+    public UserModel(int idUser, String name) {
+        this.idUser = idUser;
+        this.name = name;
     }
 
     public UserModel(String name) {
@@ -37,11 +47,11 @@ public class UserModel {
     }
 
     public int getId() {
-        return id;
+        return idUser;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {
@@ -60,17 +70,8 @@ public class UserModel {
         this.bills = bills;
     }
 
-    @Override
-    public String toString() {
-        return "UserModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", bills=" + bills +
-                '}';
-    }
-
     public void addBills(BillsModel bill) {
-        if(this.bills == null) {
+        if (this.bills == null) {
             this.bills = new ArrayList<>();
         }
         this.bills.add(bill);

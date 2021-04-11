@@ -11,6 +11,8 @@ public interface IUserService {
 
     List<UserModel> findAll();
 
+    List<UserModel> findAllWithoutBill();
+
     UserModel findById(int id);
 
     void save(UserModel user);
@@ -18,5 +20,7 @@ public interface IUserService {
     void deleteById(int id);
 
     String addUserBill(UserModel user, BillsModel bill);
+
+    List<String> getUserBillTotal(int id);
 
 }

@@ -1,12 +1,16 @@
 package com.sura.prueba.suraapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name="bills")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Table(name = "bills")
 public class BillsModel {
 
     @Id
@@ -22,10 +26,11 @@ public class BillsModel {
 
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
+    @JsonBackReference
     @JoinTable(
             name = "bills_users",
             joinColumns = @JoinColumn(name = "id_bill", nullable = false),
-            inverseJoinColumns = @JoinColumn(name="id_user", nullable = false)
+            inverseJoinColumns = @JoinColumn(name = "id_user", nullable = false)
     )
     private List<UserModel> users;
 
@@ -35,12 +40,6 @@ public class BillsModel {
     public BillsModel(Date billsDate, double billsTotal) {
         this.billsDate = billsDate;
         this.billsTotal = billsTotal;
-    }
-
-    public BillsModel(Date billsDate, double billsTotal, List<UserModel> users) {
-        this.billsDate = billsDate;
-        this.billsTotal = billsTotal;
-        this.users = users;
     }
 
     public int getId() {
@@ -75,13 +74,4 @@ public class BillsModel {
         this.users = users;
     }
 
-    @Override
-    public String toString() {
-        return "BillsModel{" +
-                "id=" + id +
-                ", billsDate=" + billsDate +
-                ", billsTotal=" + billsTotal +
-                ", user=" + users +
-                '}';
-    }
 }

@@ -2,10 +2,8 @@ package com.sura.prueba.suraapi.controller;
 
 import com.sura.prueba.suraapi.model.BillsModel;
 import com.sura.prueba.suraapi.model.UserModel;
-import com.sura.prueba.suraapi.service.IBillService;
 import com.sura.prueba.suraapi.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +25,15 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping("/users/getUserBillTotal/{id}")
+    public List<String> getUserBillTotal(@PathVariable int id) {
+        return userService.getUserBillTotal(id);
+    }
+
     @GetMapping("/users/{userId}")
     public UserModel getUser(@PathVariable int userId) {
         UserModel user = userService.findById(userId);
-        if(user == null){
+        if (user == null) {
             throw new RuntimeException("User id not found -" + userId);
         }
         return user;

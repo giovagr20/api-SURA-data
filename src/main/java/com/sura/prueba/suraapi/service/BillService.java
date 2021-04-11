@@ -25,12 +25,11 @@ public class BillService implements IBillService {
     @Override
     public BillsModel findById(int id) {
         Optional<BillsModel> dao = billRepository.findById(id);
-        if(dao.isPresent()) {
+        if (dao.isPresent()) {
             return dao.get();
         }
         return null;
     }
-
 
 
     @Override
